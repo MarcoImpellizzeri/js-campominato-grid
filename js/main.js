@@ -1,5 +1,10 @@
 const squareCountsSelect = document.querySelector("[name='squareCounts']")
 const btnStart = document.querySelector("#btn-start");
+
+/**
+ * 
+ * @type {HTMLElement}
+ */
 const myContainer = document.querySelector(".my-container");
 
 // non si mettono le parentesi alla funzione tra parentesi perche` 
@@ -13,5 +18,56 @@ function onBtnClick() {
 
     console.log("valore scelto", squareCounts);
 
-    
+    // devo genrare la griglia
+    const gridList = createGrid(squareCounts);
+
+    console.log(gridList);
+
+    // invoco la funzione che si occupera di aggiungere al DOM i vari quadrati
+    printGrid(myContainer, gridList)
+}
+
+/**
+ * Genera un singolo quadrato e lo ritorna
+ * 
+ * @param {string} squareContent 
+ * @returns {HTMLDivElement}
+ */
+function createSingleSquare(squareContent) {
+    const square = document.createElement("div");
+
+    square.classList.add("grid-square");
+    square.innerHTML = squareContent;
+
+    return square;
+}
+
+/**
+ * Dato un numero di celle, crea tutta la griglia
+ * 
+ * @param {number} squareNumber numero di quadrati da creare all'innterno della griglia
+ * @returns {HTMLDivElement[]}
+ */
+function createGrid(squareNumber) {
+    const grid = [];
+    // salvo in una variabile l'output della funzione createSinglesquare
+    for (let i = 0; i < squareNumber; i++) {
+        const newSquare = createSingleSquare(i + 1);
+
+        grid.push(newSquare);
+    }
+
+    return grid;
+}
+
+/**
+ * aggiunge ad un elemento HTML la lista dei quadrati
+ * 
+ * @param {HTMLElement} container
+ * @param {HTMLDivElement[]} squareList
+ */
+function printGrid(container, squareList) {
+    for (let i = 0; i < squareList.length; i++) {
+        container.append(squareList[i]);
+    }
 }
