@@ -30,14 +30,25 @@ function onBtnClick() {
 /**
  * Genera un singolo quadrato e lo ritorna
  * 
- * @param {string} squareContent 
+ * @param {string} squareContent contenuto testuale da inserire all'interno dei quadrati
+ * @param {string} squareCounts numero totale di quadrati da creare
+ * 
  * @returns {HTMLDivElement}
  */
-function createSingleSquare(squareContent) {
+function createSingleSquare(squareContent, squareCounts) {
     const square = document.createElement("div");
+
+    const squarePerRow = Math.sqrt(squareCounts);
 
     square.classList.add("grid-square");
     square.innerHTML = squareContent;
+    square.style.flexBasis = `calc(100% / ${squarePerRow})`;
+
+    square.addEventListener("click", function () {
+        square.classList.toggle("bg-info");
+
+        // console.log(); devi capire come stampare in console il numero che identifica il quadrato
+    })
 
     return square;
 }
@@ -52,7 +63,7 @@ function createGrid(squareNumber) {
     const grid = [];
     // salvo in una variabile l'output della funzione createSinglesquare
     for (let i = 0; i < squareNumber; i++) {
-        const newSquare = createSingleSquare(i + 1);
+        const newSquare = createSingleSquare(i + 1, squareNumber);
 
         grid.push(newSquare);
     }
@@ -67,6 +78,9 @@ function createGrid(squareNumber) {
  * @param {HTMLDivElement[]} squareList
  */
 function printGrid(container, squareList) {
+    // reset del contenuto del container
+    container.innerHTML = "";
+
     for (let i = 0; i < squareList.length; i++) {
         container.append(squareList[i]);
     }
